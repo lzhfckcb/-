@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>找回密码身份验证</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Microsoft Yahei';
+        }
+
+        a {
+            text-decoration: none;
+            color: #3494fc;
+        }
+
+        body {
+            background-color: rgb(224, 228, 232);
+            /* 弹性布局 */
+            display: flex;
+            justify-content: center;
+        }
+
+        .register {
+            width: 420px;
+            height: 400px;
+            background-color: rgb(255, 255, 255);
+
+            position: absolute;
+            top: 97px;
+            /* left: 510px; */
+
+        }
+
+        form {
+            width: 322px;
+            padding: 0px 50px;
+        }
+
+        header {
+            font-size: 24px;
+            text-align: center;
+            margin: 43px 0px 35px 0px;
+        }
+
+        header a {
+            color: #000000;
+            font-weight: 200;
+        }
+
+        .border {
+            width: 322px;
+            height: 35px;
+            box-sizing: border-box;
+            border: 1px solid rgb(224, 224, 224);
+            border-radius: 4px;
+            margin: 25px auto 0px auto;
+            padding: 6px 10px;
+            position: relative;
+        }
+
+        .theName {
+            position: absolute;
+            z-index: 3;
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            height: 14px;
+            background-color: white;
+        }
+
+
+        input {
+            outline: none;
+            border: none;
+            color: rgb(144, 144, 144);
+
+        }
+
+        .border input {
+            width: 100%;
+        }
+
+        .mess {
+            position: relative;
+            top: 3px;
+            font-size: 12px;
+            color: #ff0000;
+
+        }
+
+        .ver_code input {
+            width: 60%;
+            height: 100%;
+            position: relative;
+            top: -4px;
+        }
+        .ver_code button {
+            height: 33px;
+            min-width: 104px;
+            color: #3494fc;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid transparent;
+            border-radius: 3px;
+            position: relative;
+            top: -6px;
+            left: 21px;
+            cursor: pointer;
+        }
+        .ver_code button:hover {
+            background-color: rgb(247,251,255);
+           
+        }
+        .clearfix:after {
+            visibility: hidden;
+            clear: both;
+            display: block;
+            content: ".";
+            height: 0
+        }
+
+        .clearfix {
+            *zoom: 1
+        }
+
+        .sign_in_button {
+            width: 100%;
+            position: relative;
+        }
+        .sign_in_button .log_in {
+            position: absolute;
+            bottom: 0px;
+        }
+
+        .form input[type=submit] {
+            background-color: rgb(52, 148, 252);
+            color: #ffffff;
+            border: none;
+            width: 85px;
+            height: 36px;
+            border-radius: 4px;
+            margin: 30px 0px 5px 0px;
+            float: right;
+            cursor: pointer;
+        }
+        .hint {
+            position: absolute;
+            left: 34px;
+            bottom: 25px;
+        }
+        .hint p{
+            color: rgba(0,0,0,.54);
+            font-size: smaller;
+            text-align: center;
+            line-height: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="register">
+        <div class="form">
+            <header><a href="#">找回密码身份验证</a> </header>
+            <form method="post" action="/recover/reset/">
+                {% csrf_token %}
+                <!-- form 表单 共发送2项：手机号，验证码 -->
+                <div class="border">
+                    <span class="theName">手机号</span>
+                    <input type="text" placeholder="手机号" name="telephone">
+                    <span class="mess">{{ form.telephone.errors.0 }}</span>
+                </div>
+                <div class="border ver_code">
+                    <span class="theName">验证码</span>
+                        <input type="text" placeholder="验证码" id="code">
+                        <!-- 向后端请求验证码 -->
+                        <button id="getCode">获取验证码</button>
+                </div>
+                <div class="sign_in_button clearfix">
+                    <!-- <button>提交</button> -->
+                    <div class="log_in">已有账户，<a href="sign_up.html">立即登录</a></div>
+                    <input type="submit" value="下一步">
+                </div>
+            </form>
+            <div class="hint">
+                <p>长时间未收到验证码，请点击重新发送并检查垃圾邮件/短信
+                </p>
+                <p>若遇到问题，请邮件联系 contact@cnblogs.com</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    window.onload = function () {
+        var form = document.querySelector('form');
+        var borders = form.querySelectorAll('.border');
+        var inputs = form.querySelectorAll('input');
+        var message = form.querySelectorAll('.mess');
+
+        // 简单的改变样式
+        for (var i = 0; i < inputs.length - 1; i++) {
+            // 绑定自定义属性
+            borders[i].setAttribute('color', 0);
+
+            borders[i].addEventListener('mouseover', function () {
+                if (this.getAttribute('color') == 0) {
+                    this.style.borderColor = 'black';
+                }
+
+            });
+
+            borders[i].addEventListener('mouseout', function () {
+                if (this.getAttribute('color') == 0) {
+                    this.style.borderColor = 'rgb(224, 224, 224)';
+                }
+
+            });
+
+            inputs[i].addEventListener('focus', function () {
+                this.style.color = 'black';
+            });
+        }
+        // 判断 手机号 是否符合标准
+        inputs[0].addEventListener('blur', function () {
+            // 未确定判断条件,故用0替代
+            if (0) {
+                message[0].innerHTML = '请输入标准的手机号';
+                fault(0);
+
+            } else {
+                correct(0);
+            }
+        })
+
+        // 判断 验证码 是否符合标准 
+        inputs[1].addEventListener('blur', function () {
+            // 未确定判断条件,故用0替代
+            if (0) {
+                message[0].innerHTML = '请输入标准的昵称';
+                fault(1);
+            } else {
+                correct(1);
+            }
+        })
+
+        // 判断错误or正确时调用的函数
+        function fault(i) {
+            borders[i].style.borderColor = '#ff0000';
+            borders[i].setAttribute('color', 1);
+        }
+        function correct(i) {
+            message[i].innerHTML = ''
+            borders[i].style.borderColor = 'rgb(224, 224, 224)';
+            borders[i].setAttribute('color', 0);
+        }
+    }
+
+</script>

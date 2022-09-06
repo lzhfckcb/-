@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Microsoft Yahei';
+        }
+
+        a {
+            text-decoration: none;
+            color: #3494fc;
+        }
+
+        body {
+            background-color: rgb(224, 228, 232);
+            /* 弹性布局 */
+            display: flex;
+            justify-content: center;
+        }
+
+        .register {
+            width: 420px;
+            height: 542px;
+            background-color: rgb(255, 255, 255);
+
+            position: absolute;
+            top: 97px;
+            /* left: 510px; */
+
+        }
+
+        form {
+            width: 322px;
+            padding: 0px 50px;
+        }
+
+        .head {
+            text-align: center;
+        }
+
+        header {
+            font-size: 24px;
+            margin: 43px 0px 35px 0px;
+        }
+
+        header a {
+            color: #000000;
+            font-weight: 200;
+        }
+
+        .head img {
+            position: relative;
+            top: -10px;
+        }
+
+        .head .title {
+            color: rgb(144, 144, 144);
+            font: 300 15px '';
+        }
+
+        .border {
+            width: 322px;
+            height: 35px;
+            box-sizing: border-box;
+            border: 1px solid rgb(224, 224, 224);
+            border-radius: 4px;
+            margin: 25px auto 0px auto;
+            padding: 6px 10px;
+            position: relative;
+        }
+
+        .ver_code_border {
+            width: 200px;
+            height: 35px;
+            box-sizing: border-box;
+            border: 1px solid rgb(224, 224, 224);
+            border-radius: 4px;
+            margin: 25px auto 0px auto;
+            padding: 6px 10px;
+            float: left;
+            position: relative;
+        }
+        .ver_code img {
+            height: 35px;
+            float: right;
+        }
+
+        .clearfix:after {
+            visibility: hidden;
+            clear: both;
+            display: block;
+            content: ".";
+            height: 0
+        }
+
+        .clearfix {
+            *zoom: 1
+        }
+
+        input {
+            outline: none;
+            border: none;
+            color: rgb(144, 144, 144);
+            width: 100%;
+
+        }
+
+        .mess {
+            position: relative;
+            top: 3px;
+            font-size: 12px;
+            color: #ff0000;
+
+        }
+
+        .find {
+            float: right;
+            font-size: 12px;
+            color: #3494fc;
+
+            position: relative;
+            top: 6px;
+            right: -10px;
+        }
+
+        .sign_in_button {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form input[type=submit] {
+            background-color: rgb(52, 148, 252);
+            color: #ffffff;
+            border: none;
+            width: 85px;
+            height: 36px;
+            border-radius: 4px;
+            margin: 20px 0px 5px 0px;
+            cursor: pointer;
+        }
+
+        .remember {
+            display: flex;
+            justify-content: left;
+            margin-top: 10px;
+            font: 400 14px '';
+        }
+
+        .form input[type=checkbox] {
+            border: none;
+            height: 12px;
+            width: 12px;
+            position: relative;
+            top: 5px;
+            margin: 0px 5px 0px 3px;
+            color: #3494fc;
+            cursor: pointer;
+        }
+
+        label {
+            cursor: pointer;
+        }
+
+        .link {
+            padding: 0px 50px;
+        }
+
+        .link .log_in {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register">
+        <div class="form">
+            <div class="head">
+                <header><a href="#">博客园用户登录</a> </header>
+                <!-- 图片链接来自网络，后期将移入本地图片 -->
+                <img src="https://account.cnblogs.com/assets/img/sign-in-avatar.svg" alt="" width="60px">
+
+                <div class="title">代码改变世界</div>
+            </div>
+
+            <form method="post" novalidate>
+                <!-- form 表单 共发送3项：昵称，密码，图片验证码-->
+                {% csrf_token %}
+                <div class="border">
+                    <input type="text" placeholder="登录用户名" name="name">
+                    <span class="mess">{{ form.name.errors.0 }}</span>
+                    <span class="find">忘记用户名</span>
+                </div>
+
+                <div class="border">
+                    <input type="password" placeholder="密码" value="" name="password">
+                    <span class="mess">{{ form.password.errors.0 }}</span>
+                    <span class="find"><a href="/recover/verify/">忘记密码</a></span>
+                </div>
+                <div class="ver_code clearfix">
+                    <div class="ver_code_border">
+                        <input type="text" placeholder="验证码" name="code">
+                        <span class="mess">{{ form.code.errors.0 }}</span>
+                    </div>
+                    <!-- 向后端请求验证码 -->
+                        <img src="/image/code/" alt="" id="ver_code_img" style="width: 100px;margin-top: 15px">
+                </div>
+
+
+                <div class="remember" style="margin-top: 15px">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">记住我</label>
+                </div>
+
+                <div class="sign_in_button">
+                    <!-- 提交 -->
+                    <input type="submit" value="提交">
+                </div>
+                <span class="state"></span>
+            </form>
+
+            <div class="link">
+                <div class="log_in">没有账户，<a href="/user/register/">立即注册</a></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    var uname = document.getElementById('name');
+    var pass = document.getElementById('password');
+    var remember = document.getElementById('remember');
+
+    if (localStorage.getItem('name') && localStorage.getItem('password')) {
+        uname.value = localStorage.getItem('name');
+        pass.value = localStorage.getItem('password');
+        remember.checked = true;
+    }
+
+    remember.addEventListener('change', function (e) {
+        if (this.checked && !(uname.value && pass.value)) {
+            this.checked = false;
+            alert('账号密码未输入');
+        } else if (this.checked) {
+            localStorage.setItem('name', uname.value);
+            localStorage.setItem('password', pass.value);
+        } else {
+            localStorage.removeItem('name');
+            localStorage.removeItem('password');
+        }
+    })
+</script>

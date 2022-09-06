@@ -1,0 +1,69 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+    <div class="focus fl">
+        <!-- 左侧按钮 -->
+        <a href="javascript:;" class="arrow-l">
+            &lt;
+        </a>
+        <!-- 右侧按钮 -->
+        <a href="javascript:;" class="arrow-r"> &gt; </a>
+        <!-- 核心的滚动区域 -->
+        <ul>
+            <li>
+                <a href="#"><img src="{% static 'image/focus.jpg' %}" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="{% static 'image/focus1.jpg' %}" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="{% static 'image/focus2.jpg' %}" alt=""></a>
+            </li>
+            <li>
+                <a href="#"><img src="{% static 'image/focus3.jpg' %}" alt=""></a>
+            </li>
+        </ul>
+        <!-- 小圆圈 -->
+        <ol class="circle">
+
+        </ol>
+    </div>
+    <header>
+        <ul>
+            <!-- 以下内容将动态生成 -->
+            <li><a href="#">【编辑推荐】踩坑了！0作为除数，不一定会抛出异常！(26/24/2803) »</a></li>
+            <li><a href="#">【最多推荐】一次服务器被入侵的处理过程分享(26/27/1557) »</a></li>
+            <li><a href="#">【新闻头条】全球最强智算来了：12000000000000000000（别数了18个0）FLOPS(0/1/209) »</a></li>
+            <li><a href="#">【推荐新闻】油管博主给蛇做了套义肢，有三千万人在线围观(0/3/273) »</a></li>
+        </ul>
+    </header>
+    {% for article in article_list %}
+        <div class="index_pages_area">
+            <div class="index_pages_title"><a
+                    href="/article/{{ article.id }}">{{ article.title }}</a></div>
+            <div class="index_pages_img">
+                <img src="{% static 'image/title_pic.png' %}" alt="">
+            </div>
+            <div class="index_pages_Summary">
+                <p>{{ article.desc }}</p>
+            </div>
+            <div class="index_pages_data">
+                <ul>
+                    <li>发布时间:{{ article.create_time }}</li>
+                    <li>-</li>
+                    <li>访问量:0</li>
+                    <li>-</li>
+                    <li>点赞量:{{ article.up_count }}</li>
+                    <li>-</li>
+                    <li>评论量:{{ article.comment_count }}</li>
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+    <p><h1 style="color: red">{{ flag }}</h1></p>
+    <div class="pagination">
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
+{% endblock %}

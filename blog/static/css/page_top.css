@@ -1,0 +1,114 @@
+/* 头部栏的CSS样式 */
+.page_top {
+    height: 57px;
+    background-color: rgb(36, 41, 47);
+    color: white;
+    min-width: 1000px;
+}
+
+.page_top_link {
+    float: left;
+}
+
+.page_top_link_front {
+    float: left;
+    line-height: 57px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #808080;
+}
+
+.page_top_link_search {
+    color: rgb(144, 144, 144);
+    width: 250px;
+    height: 27px;
+    float: left;
+    border: 1px solid rgb(87, 96, 106);
+    padding: 0px 5px;
+    box-sizing: border-box;
+    margin: 16px 20px 0px;
+}
+
+.page_top_link_search button {
+    font-size: 15px;
+    color: inherit;
+    background-color: rgb(36, 41, 47);
+    border: none;
+    float: right;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.page_top_link_search input {
+    outline: none;
+    border: none;
+    background-color: rgb(36, 41, 47);
+    width: 80%;
+}
+
+.page_top_link_search input:hover {
+    color: rgb(144, 144, 144);
+}
+
+.page_top_info {
+    float: right;
+    padding: 16px 20px 0px;
+    cursor: pointer;
+}
+
+.page_top_info_imgBorder {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    float: right;
+}
+
+.page_top_info img {
+    width: 25px;
+}
+
+.page_top_info_menu {
+    float: right;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: white;
+    position: relative;
+    top: 10px;
+    left: 5px;
+}
+
+.page_top_info_selectMenu {
+    width: 80px;
+    border-radius: 5px;
+    display: none;
+    padding: 5px 0px;
+    background-color: #808080;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+}
+
+.page_top_info_selectMenu li {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.page_top_info_selectMenu li:hover {
+    background-color: aqua;
+}
+
+.page_top_info_selectMenu::after {
+    content: " ";
+    display: block;
+    width: 0px;
+    height: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #808080;
+    position: absolute;
+    top: -20px;
+    right: 13px;
+}

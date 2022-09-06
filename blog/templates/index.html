@@ -1,0 +1,320 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <link rel="stylesheet" href={% static 'css/page_top.css' %}>
+    <link rel="stylesheet" href="{% static 'css/foucs.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <script src={% static 'js/animate.js' %}></script>
+    <script src={% static 'js/focus.js' %}></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #808080;
+        }
+
+        li {
+            list-style: none;
+        }
+
+
+        .page_center {
+            background-color: rgb(246, 248, 250);
+            min-width: 1000px;
+            min-height: 650px;
+            height: auto;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        /* 导航栏部分CSS样式 */
+        .left_info {
+            margin: 5px 0px;
+        }
+
+        .left_info ul {
+            position: sticky;
+            top: 0;
+        }
+
+        .left_info ul li {
+            display: block;
+            padding: 15px 0px 15px 60px;
+            margin: 3px 0px;
+            width: 100px;
+            cursor: pointer;
+        }
+
+        /* 主体部分CSS样式 */
+        .main_info {
+            background-color: #ffffff;
+            width: 900px;
+        }
+
+        .main_info header {
+            padding: 20px;
+        }
+
+        header ul li {
+            font: 400 14px " ";
+            display: block;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        header ul li a:hover {
+            color: blue;
+        }
+
+        /* 博客框部分 */
+        .index_pages {
+            float: right;
+            width: 700px;
+            margin-top: 30px;
+            /* background-color: bisque; */
+        }
+
+        .index_pages nav {
+            border-bottom: 1px solid rgb(36, 41, 47);
+            height: 45px;
+        }
+
+        .index_pages span {
+            font: 400 16px " ";
+            line-height: 45px;
+            padding: 0px 20px;
+        }
+
+        .index_pages_area {
+            /* width: 700px; */
+            width: 100%;
+            height: 180px;
+            background-color: #ffffff;
+            /* border-top: 1px solid rgb(216, 222, 228); */
+            border-bottom: 1px solid rgb(216, 222, 228);
+            padding: 12px 20px 0px;
+            margin: 5px 0px;
+
+            box-sizing: border-box;
+        }
+
+        .index_pages_title {
+            font: 700 16px " ";
+            /* width: 100%; */
+            color: #1d2129;
+            line-height: 24px;
+            margin-bottom: 15px;
+        }
+
+        .index_pages_img img {
+            float: right;
+            width: 120px;
+            height: 80px;
+        }
+
+        .index_pages_Summary p {
+            font: 400 13px " ";
+            color: #86909c;
+            line-height: 22px;
+        }
+
+        .index_pages_data {
+            margin: 0px;
+        }
+
+        .index_pages_data li {
+            font: 400 12px " ";
+            color: #86909c;
+            line-height: 22px;
+
+            float: left;
+            padding: 5px;
+
+            position: relative;
+            top: 10px;
+        }
+
+        .returnTop {
+            font-size: 40px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 32px;
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: rotate(90deg);
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        /* 底部部分 */
+        .page_bottom {
+            min-height: 82px;
+            box-sizing: border-box;
+            min-width: 1000px;
+            background-color: rgb(188, 188, 188);
+            padding: 10px 0px;
+        }
+
+        .page_bottom_box {
+            display: flex;
+            justify-content: center;
+            min-width: 1000px;
+        }
+
+        .page_bottom_box li {
+            padding: 0px 3px;
+            float: left;
+            text-align: center;
+            font: 400 12px " ";
+            color: #86909c;
+            line-height: 22px;
+        }
+
+        .page_top_link_search input[type=submit] {
+            width: 30px;
+            font-size: 15px;
+            color: inherit;
+            background-color: rgb(36, 41, 47);
+            border: none;
+            float: right;
+            line-height: 24px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+<div class="page_top" id="top">
+    <div class="page_top_link">
+
+        <div class="page_top_link_front">
+            <a href="/blog/index">首页</a>
+        </div>
+
+        <div class="page_top_link_search">
+            <form action="/index/search" method="get">
+                <input type="text" placeholder="搜索文章" name="search">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+
+    </div>
+    <div class="page_top_info">
+        <div class="page_top_info_menu">
+            <div class="page_top_info_selectMenu">
+                <ul>
+                    <li>_用户名_</li>
+                    <li>个人中心</li>
+                    <li>退出登录</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page_top_info_imgBorder">
+            <a href="#">
+                <img src="{% static 'image/head_pic.png' %}" alt="">
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="page_center">
+    <div class="left_info">
+        <ul>
+            <li><a href="/blog/index">推荐</a></li>
+            <li><a href="/index/ranking">热榜</a></li>
+            <li>分类</li>
+            <li>关注</li>
+            <li>点赞</li>
+            <li>评论</li>
+        </ul>
+    </div>
+    <div class="main_info">
+        <!-- 以下内容将动态生成 -->
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <div class="right_box">
+        <a href="#top">
+            <div class="returnTop">
+                &lt;
+            </div>
+        </a>
+    </div>
+</div>
+<div class="page_bottom">
+    <div class="page_bottom_box">
+        <ul>
+            <li>关于我们</li>
+            <li>招贤纳士</li>
+            <li>商务合作</li>
+            <li>寻求报道</li>
+        </ul>
+    </div>
+
+    <div class="page_bottom_box">
+        <ul>
+            <li>公安部备案号11010502030143</li>
+            <li>京ICP备19004658</li>
+            <li>京网文[2020]1039-165号</li>
+            <li>经营性网站备案信息</li>
+            <li>北京互联网违法和不良信息举报中心</li>
+            <li>网络110报警服务</li>
+            <li>中国互联网举报中心</li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>
+<!-- 下拉菜单 -->
+<script>
+    var info = document.querySelector('.page_top_info');
+    var menu = document.querySelector('.page_top_info_selectMenu');
+    info.addEventListener('mouseover', function () {
+        menu.style.display = 'block';
+    });
+    info.addEventListener('mouseout', function () {
+        menu.style.display = 'none';
+    });
+    menu.addEventListener('mouseover', function () {
+        this.style.display = 'block';
+    });
+    menu.addEventListener('mouseout', function () {
+        this.style.display = 'none';
+    });
+</script>
+<!-- 导航栏点击 -->
+<script>
+    let leftInfo = document.querySelector('.left_info');
+    let lis = leftInfo.querySelectorAll('li');
+
+    lis[0].style.backgroundColor = "#ffffff";
+    lis[0].style.boxShadow = "rgba(200,200,200,.2) 1px 2px 4px 1px";
+
+    for (let i = 0; i < lis.length; i++) {
+        lis[i].addEventListener('click', function () {
+            for (let j = 0; j < lis.length; j++) {
+                lis[j].style.backgroundColor = "rgb(246, 248, 250)";
+                lis[j].style.boxShadow = "";
+            }
+            this.style.backgroundColor = "#ffffff";
+            this.style.boxShadow = "rgba(200,200,200,.2) 1px 2px 4px 1px";
+        })
+    }
+</script>

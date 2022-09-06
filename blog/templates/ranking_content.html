@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+    {% for article in article_list %}
+    <div class="index_pages_area">
+        <div class="index_pages_title">{{ article.title }}</div>
+        <div class="index_pages_img">
+            <img src="{% static 'image/title_pic.png' %}" alt="">
+        </div>
+        <div class="index_pages_Summary">
+            <p>{{ article.desc }}</p>
+        </div>
+        <div class="index_pages_data">
+            <ul>
+                <li>发布时间:{{ article.create_time }}</li>
+                <li>-</li>
+                <li>访问量:0</li>
+                <li>-</li>
+                <li>点赞量:{{ article.up_count }}</li>
+                <li>-</li>
+                <li>评论量:{{ article.comment_count }}</li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

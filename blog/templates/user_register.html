@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Microsoft Yahei';
+        }
+
+        a {
+            text-decoration: none;
+            color: #3494fc;
+        }
+
+        body {
+            background-color: rgb(224, 228, 232);
+            /* 弹性布局 */
+            display: flex;
+            justify-content: center;
+        }
+
+        .register {
+            width: 420px;
+            height: 482px;
+            background-color: rgb(255, 255, 255);
+
+            position: absolute;
+            top: 97px;
+            /* left: 510px; */
+
+        }
+
+        form {
+            width: 322px;
+            padding: 0px 50px;
+        }
+
+        header {
+            font-size: 24px;
+            text-align: center;
+            margin: 43px 0px 35px 0px;
+        }
+
+        header a {
+            color: #000000;
+            font-weight: 200;
+        }
+
+        .border {
+            width: 322px;
+            height: 35px;
+            box-sizing: border-box;
+            border: 1px solid rgb(224, 224, 224);
+            border-radius: 4px;
+            margin: 25px auto 0px auto;
+            padding: 6px 10px;
+            position: relative;
+        }
+
+        .theName {
+            position: absolute;
+            z-index: 3;
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            height: 14px;
+            background-color: white;
+        }
+
+
+        input {
+            outline: none;
+            border: none;
+            color: rgb(144, 144, 144);
+            width: 100%;
+
+        }
+
+        .mess {
+            position: relative;
+            top: 3px;
+            font-size: 12px;
+            color: #ff0000;
+
+        }
+
+        .sign_in_button {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form input[type=submit] {
+            background-color: rgb(52, 148, 252);
+            color: #ffffff;
+            border: none;
+            width: 85px;
+            height: 36px;
+            border-radius: 4px;
+            margin: 20px 0px 5px 0px;
+        }
+
+        .link {
+            padding: 0px 50px;
+        }
+
+        .link .agreement {
+            font-size: 14px;
+            color: rgb(144, 144, 144);
+        }
+
+        .link .log_in {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register">
+        <div class="form">
+            <header><a href="#">博客园用户注册</a> </header>
+            <form method="post">
+                <!-- form 表单 共发送3项：手机号，昵称，密码 -->
+                {% csrf_token %}
+                <div class="border">
+                    <span class="theName">手机号</span>
+                    <input type="text" placeholder="手机号" name="telephone">
+                    <span class="mess">{{ form.telephone.errors.0 }}</span>
+                </div>
+                <div class="border">
+                    <span class="theName">昵称</span>
+                    <input type="text" placeholder="昵称" name="name">
+                    <span class="mess">{{ form.name.errors.0 }}</span>
+                </div>
+                <div class="border">
+                    <span class="theName">密码</span>
+                    <input type="password" placeholder="密码" value="" name="password">
+                    <span class="mess">{{ form.password.errors.0 }}</span>
+                </div>
+                <div class="border">
+                    <span class="theName">确认密码</span>
+                    <input type="password" placeholder="确认密码" name="confirm_password">
+                    <span class="mess">{{ form.confirm_password.errors.0 }}</span>
+                </div>
+                <div class="sign_in_button">
+                    <!-- <button>提交</button> -->
+                    <input type="submit" value="提交">
+                </div>
+            </form>
+            <div class="link">
+                <div class="agreement">注册即表示您同意并愿意遵守<a href="#">用户协议</a>与<a href="#">隐私政策</a></div>
+                <div class="log_in">已有账户，<a href="#">立即登录</a></div>
+            </div>
+
+        </div>
+    </div>
+{#<script>#}
+{#    window.onload = function () {#}
+{#        var form = document.querySelector('form');#}
+{#        var borders = form.querySelectorAll('.border');#}
+{#        var inputs = form.querySelectorAll('input');#}
+{#        var message = form.querySelectorAll('.mess');#}
+{##}
+{#        // 简单的改变样式#}
+{#        for (var i = 0; i < inputs.length - 1; i++) {#}
+{#            // 绑定自定义属性#}
+{#            borders[i].setAttribute('color', 0);#}
+{##}
+{#            borders[i].addEventListener('mouseover', function () {#}
+{#                if (this.getAttribute('color') == 0) {#}
+{#                    this.style.borderColor = 'black';#}
+{#                }#}
+{##}
+{#            });#}
+{##}
+{#            borders[i].addEventListener('mouseout', function () {#}
+{#                if (this.getAttribute('color') == 0) {#}
+{#                    this.style.borderColor = 'rgb(224, 224, 224)';#}
+{#                }#}
+{##}
+{#            });#}
+{##}
+{#            inputs[i].addEventListener('focus', function () {#}
+{#                this.style.color = 'black';#}
+{#            });#}
+{#        }#}
+{#        // 判断 手机号 是否符合标准#}
+{#        inputs[0].addEventListener('blur', function () {#}
+{#            // 未确定判断条件,故用0替代#}
+{#            if (0) {#}
+{#                message[0].innerHTML = '请输入标准的手机号';#}
+{#                fault(0);#}
+{##}
+{#            } else {#}
+{#                correct(0);#}
+{#            }#}
+{#        })#}
+{##}
+{#        // 判断 昵称 是否符合标准#}
+{#        inputs[1].addEventListener('blur', function () {#}
+{#            // 未确定判断条件,故用0替代#}
+{#            if (0) {#}
+{#                message[0].innerHTML = '请输入标准的昵称';#}
+{#                fault(1);#}
+{#            } else {#}
+{#                correct(1);#}
+{#            }#}
+{#        })#}
+{##}
+{#        // 判断 密码 是否符合标准#}
+{#        inputs[2].addEventListener('blur', function () {#}
+{#            // 未确定判断条件,故用0替代#}
+{#            if (0) {#}
+{#                message[0].innerHTML = '请输入标准的密码';#}
+{#                fault(2);#}
+{#            } else {#}
+{#                correct(2);#}
+{#            }#}
+{#        })#}
+{##}
+{#        // 判断 确认密码 是否符合标准#}
+{#        inputs[3].addEventListener('blur', function () {#}
+{#            // 未确定判断条件,故用0替代#}
+{#            if (this.value != inputs[2].value) {#}
+{#                message[3].innerHTML = '与原密码不符';#}
+{#                fault(3);#}
+{#            } else {#}
+{#                correct(3);#}
+{#            }#}
+{#        })#}
+{##}
+{##}
+{#        // 判断错误or正确时调用的函数#}
+{#        function fault(i) {#}
+{#            borders[i].style.borderColor = '#ff0000';#}
+{#            borders[i].setAttribute('color', 1);#}
+{#        }#}
+{#        function correct(i) {#}
+{#            message[i].innerHTML = ''#}
+{#            borders[i].style.borderColor = 'rgb(224, 224, 224)';#}
+{#            borders[i].setAttribute('color', 0);#}
+{#        }#}
+{#    }#}
+{##}
+{#</script>#}
+</body>
+</html>
