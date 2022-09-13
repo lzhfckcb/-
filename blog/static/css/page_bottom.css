@@ -1,0 +1,23 @@
+/* 底部部分 */
+.page_bottom {
+    min-height: 82px;
+    box-sizing: border-box;
+    min-width: 1000px;
+    background-color: rgb(188, 188, 188);
+    padding: 10px 0px;
+}
+
+.page_bottom_box {
+    display: flex;
+    justify-content: center;
+    min-width: 1000px;
+}
+
+.page_bottom_box li {
+    padding: 0px 3px;
+    float: left;
+    text-align: center;
+    font: 400 12px " ";
+    color: #86909c;
+    line-height: 22px;
+}

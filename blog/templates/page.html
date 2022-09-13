@@ -1,3 +1,5 @@
+{% load static %}
+{% csrf_token %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章页面</title>
-    <link rel="stylesheet" href="/css/page_top.css">
-    <link rel="stylesheet" href="/css/page_bottom.css">
-    <script src="js/page_top_info_selectMenu.js"></script>
+    <link rel="stylesheet" href={% static 'css/page_top.css' %}>
+    <link rel="stylesheet" href={% static 'css/page_bottom.css' %}>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}">
+    <script src={% static 'js/page_top_info_selectMenu.js' %}></script>
+    <script src={% static 'js/jquery-3.6.0.min.js' %}></script>
 
     <style>
         * {
@@ -60,8 +64,23 @@
             cursor: pointer;
         }
 
-        .left_box ul li::after {
-            content: "1";
+        .left_box .diggit::after {
+            content: "{{ article.up_count }}";
+            font-size: 12px;
+            color: white;
+            line-height: 15px;
+            display: block;
+            width: 30px;
+            height: 15px;
+            border-radius: 6px;
+            background-color: rgb(194, 200, 209);
+            position: absolute;
+            top: 0px;
+            right: -10px;
+        }
+
+        .left_box .comment::after {
+            content: "0";
             font-size: 12px;
             color: white;
             line-height: 15px;
@@ -278,8 +297,8 @@
             margin-left: 10px;
         }
 
-        .comment_name ,
-        .comment_data{
+        .comment_name,
+        .comment_data {
             font-size: 12px;
             font-weight: 700;
             color: #808080;
@@ -292,6 +311,7 @@
         .comment_data span {
             margin: 0px 5px 0px 0px;
         }
+
         @media screen and (max-width: 720px) {
             .left_box {
                 display: none;
@@ -369,202 +389,219 @@
             margin-left: 20px;
             flex: 1;
         }
+
+        .page_top_link_search input[type=submit] {
+            width: 30px;
+            font-size: 15px;
+            color: inherit;
+            background-color: rgb(36, 41, 47);
+            border: none;
+            float: right;
+            line-height: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
-    <div class="page_top" id="top">
-        <div class="page_top_link">
+<div class="page_top" id="top">
+    <div class="page_top_link">
 
-            <div class="page_top_link_front">
-                <a href="#">首页</a>
-            </div>
-
-            <div class="page_top_link_search">
-                <form action="#">
-                    <input type="text" placeholder="搜索文章" id="search">
-                    <input type="submit" value="搜索">
-                </form>
-            </div>
-
+        <div class="page_top_link_front">
+            <a href="#">首页</a>
         </div>
-        <div class="page_top_info">
-            <div class="page_top_info_menu">
-                <div class="page_top_info_selectMenu">
-                    <ul>
-                        <li>_用户名_</li>
-                        <li>个人中心</li>
-                        <li>退出登录</li>
-                    </ul>
+
+        <div class="page_top_link_search">
+            <form action="#">
+                <input type="text" placeholder="搜索文章" id="search">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+
+    </div>
+    <div class="page_top_info">
+        <div class="page_top_info_menu">
+            <div class="page_top_info_selectMenu">
+                <ul>
+                    <li>_用户名_</li>
+                    <li>个人中心</li>
+                    <li>退出登录</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page_top_info_imgBorder">
+            <a href="#">
+                <img src="/images/head_pic.png" alt="">
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div class="page_center">
+    <div class="left_box">
+        <ul id="div_digg">
+            <li class="diggit action">点赞</li>
+
+            <li class="comment">评论</li>
+
+            <li>收藏</li>
+        </ul>
+    </div>
+    <div class="main">
+        <div class="center_box">
+            <!-- 文章部分 -->
+            <div class="center_box_page">
+                <h1 class="page_title">{{ article.title }}</h1>
+                <div class="page_author">
+                    <div class="page_author_avatar">
+                        <img src="/images/head_pic.png" alt="">
+                    </div>
+                    <div class="page_author_info">
+                        <a href="#">_用户名_</a>
+                        <div class="info_time">
+                            <span>2022年04月06日 23:27</span>
+                        </div>
+                    </div>
+                    <button>+ 关注</button>
+                </div>
+                <div class="page_text">
+                    {{ article.content|safe }}
+                </div>
+                <div class="page_label">
+                    <div class="tag_list_box">
+                        <div class="sort_box">
+                            <span>分类:</span>
+                            <a href="#">前端</a>
+                            <a href="#">前端</a>
+                        </div>
+                        <div class="tag_box">
+                            <span>标签:</span>
+                            <a href="#">前端</a>
+                            <a href="#">前端</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="page_top_info_imgBorder">
-                <a href="#">
-                    <img src="/images/head_pic.png" alt="">
+            <!-- 评论区部分 -->
+            <div class="center_box_comment">
+                <h3 class="title">评论区</h3>
+                <div class="inputSection">
+                    <form action="">
+                        <div class="myhead">
+                            <img src="/images/head_pic.png" alt="">
+                        </div>
+                        <textarea name="" id="" cols="" rows=""></textarea>
+                        <input type="submit" value="发表评论">
+                    </form>
+                </div>
+                <!-- 动态创建 -->
+                <div class="comment_box">
+                    <div class="comment_meta">
+                        <div class="comment_avatar">
+                            <img src="/images/head_pic.png" alt="">
+                        </div>
+                        <div class="comment_body">
+                            <div class="comment_name">
+                                _用户名_
+                            </div>
+                            <div class="comment_word">
+                                知天易，逆天男
+                            </div>
+                            <div class="comment_data">
+                                <span>2022-09-06 17:24 </span>
+                                <span>点赞: 1</span>
+                                <span>评论: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 动态创建 -->
+                <div class="comment_box">
+                    <div class="comment_meta">
+                        <div class="comment_avatar">
+                            <img src="/images/head_pic.png" alt="">
+                        </div>
+                        <div class="comment_body">
+                            <div class="comment_name">
+                                _用户名_
+                            </div>
+                            <div class="comment_word">
+                                知天易，逆天男
+                            </div>
+                            <div class="comment_data">
+                                <span>2022-09-06 17:24 </span>
+                                <span>点赞: 1</span>
+                                <span>评论: 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right_box">
+            <div class="author_info">
+                <a href="#" class="user_item">
+                    <div class="avatar">
+                        <img src="/images/head_pic.png" alt="">
+                    </div>
+                    <div class="user_name">_用户名_</div>
                 </a>
+                <ul>
+                    <li>获得点赞数 336</li>
+                    <li>文章被阅读 24,142</li>
+                </ul>
             </div>
-
         </div>
     </div>
 
-    <div class="page_center">
-        <div class="left_box">
-            <ul>
-                <li>点赞</li>
-                <li>评论</li>
-                <li>收藏</li>
-            </ul>
-        </div>
-        <div class="main">
-            <div class="center_box">
-                <!-- 文章部分 -->
-                <div class="center_box_page">
-                    <h1 class="page_title">基于Auto.js写抢菜脚本</h1>
-                    <div class="page_author">
-                        <div class="page_author_avatar">
-                            <img src="/images/head_pic.png" alt="">
-                        </div>
-                        <div class="page_author_info">
-                            <a href="#">_用户名_</a>
-                            <div class="info_time">
-                                <span>2022年04月06日 23:27</span>
-                            </div>
-                        </div>
-                        <button>+ 关注</button>
-                    </div>
-                    <div class="page_text">
-                        <p>经过上述讨论， 而这些并不是完全重要，更加重要的问题是， 带着这些问题，我们来审视一下嘉然今天吃什么。 我们都知道，只要有意义，那么就必须慎重考虑。
-                            笛卡儿曾经提到过，读一切好书，就是和许多高尚的人谈话。这启发了我， 拉罗什夫科曾经说过，取得成就时坚持不懈，要比遭到失败时顽强不屈更重要。这似乎解答了我的疑惑。 经过上述讨论，
-                            我们不得不面对一个非常尴尬的事实，那就是， 奥斯特洛夫斯基在不经意间这样说过，共同的事业，共同的斗争，可以使人们产生忍受一切的力量。　带着这句话，我们还要更加慎重的审视这个问题：
-                            要想清楚，嘉然今天吃什么，到底是一种怎么样的存在。 而这些并不是完全重要，更加重要的问题是， 就我个人来说，嘉然今天吃什么对我的意义，不能不说非常重大。
-                            我们不得不面对一个非常尴尬的事实，那就是， 经过上述讨论， 所谓嘉然今天吃什么，关键是嘉然今天吃什么需要如何写。</p>
-                        <br>
-                        <p>那么， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 我们不得不面对一个非常尴尬的事实，那就是， 所谓嘉然今天吃什么，关键是嘉然今天吃什么需要如何写。
-                            生活中，若嘉然今天吃什么出现了，我们就不得不考虑它出现了的事实。 从这个角度来看， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。
-                            在这种困难的抉择下，本人思来想去，寝食难安。 所谓嘉然今天吃什么，关键是嘉然今天吃什么需要如何写。 所谓嘉然今天吃什么，关键是嘉然今天吃什么需要如何写。
-                            而这些并不是完全重要，更加重要的问题是， 生活中，若嘉然今天吃什么出现了，我们就不得不考虑它出现了的事实。 现在，解决嘉然今天吃什么的问题，是非常非常重要的。 所以，
-                            我们都知道，只要有意义，那么就必须慎重考虑。 洛克曾经说过，学到很多东西的诀窍，就是一下子不要学很多。这不禁令我深思。
-                            维龙在不经意间这样说过，要成功不需要什么特别的才能，只要把你能做的小事做得好就行了。这不禁令我深思。 带着这些问题，我们来审视一下嘉然今天吃什么。 嘉然今天吃什么因何而发生？
-                            了解清楚嘉然今天吃什么到底是一种怎么样的存在，是解决一切问题的关键。 带着这些问题，我们来审视一下嘉然今天吃什么。 每个人都不得不面对这些问题。 在面对这种问题时，
-                            带着这些问题，我们来审视一下嘉然今天吃什么。 要想清楚，嘉然今天吃什么，到底是一种怎么样的存在。
-                            吕凯特说过一句富有哲理的话，生命不可能有两次，但许多人连一次也不善于度过。带着这句话，我们还要更加慎重的审视这个问题： 这样看来， 一般来讲，我们都必须务必慎重的考虑考虑。
-                            要想清楚，嘉然今天吃什么，到底是一种怎么样的存在。 而这些并不是完全重要，更加重要的问题是， 在这种困难的抉择下，本人思来想去，寝食难安。
-                            本人也是经过了深思熟虑，在每个日日夜夜思考这个问题。 斯宾诺莎曾经提到过，最大的骄傲于最大的自卑都表示心灵的最软弱无力。这似乎解答了我的疑惑。
-                            歌德曾经提到过，意志坚强的人能把世界放在手中像泥块一样任意揉捏。带着这句话，我们还要更加慎重的审视这个问题： 带着这些问题，我们来审视一下嘉然今天吃什么。</p>
-                    </div>
-                    <div class="page_label">
-                        <div class="tag_list_box">
-                            <div class="sort_box">
-                                <span>分类:</span>
-                                <a href="#">前端</a>
-                                <a href="#">前端</a>
-                            </div>
-                            <div class="tag_box">
-                                <span>标签:</span>
-                                <a href="#">前端</a>
-                                <a href="#">前端</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+</div>
 
-                <!-- 评论区部分 -->
-                <div class="center_box_comment">
-                    <h3 class="title">评论区</h3>
-                    <div class="inputSection">
-                        <form action="">
-                            <div class="myhead">
-                                <img src="/images/head_pic.png" alt="">
-                            </div>
-                            <textarea name="" id="" cols="" rows=""></textarea>
-                            <input type="submit" value="发表评论">
-                        </form>
-                    </div>
-                    <!-- 动态创建 -->
-                    <div class="comment_box">
-                        <div class="comment_meta">
-                            <div class="comment_avatar">
-                                <img src="/images/head_pic.png" alt="">
-                            </div>
-                            <div class="comment_body">
-                                <div class="comment_name">
-                                    _用户名_
-                                </div>
-                                <div class="comment_word">
-                                    知天易，逆天男
-                                </div>
-                                <div class="comment_data">
-                                    <span>2022-09-06 17:24 </span>
-                                    <span>点赞: 1</span>
-                                    <span>评论: 1</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 动态创建 -->
-                    <div class="comment_box">
-                        <div class="comment_meta">
-                            <div class="comment_avatar">
-                                <img src="/images/head_pic.png" alt="">
-                            </div>
-                            <div class="comment_body">
-                                <div class="comment_name">
-                                    _用户名_
-                                </div>
-                                <div class="comment_word">
-                                    知天易，逆天男
-                                </div>
-                                <div class="comment_data">
-                                    <span>2022-09-06 17:24 </span>
-                                    <span>点赞: 1</span>
-                                    <span>评论: 1</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="right_box">
-                <div class="author_info">
-                    <a href="#" class="user_item">
-                        <div class="avatar">
-                            <img src="/images/head_pic.png" alt="">
-                        </div>
-                        <div class="user_name">_用户名_</div>
-                    </a>
-                    <ul>
-                        <li>获得点赞数 336 </li>
-                        <li>文章被阅读 24,142 </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
+<div class="page_bottom">
+    <div class="page_bottom_box">
+        <ul>
+            <li>关于我们</li>
+            <li>招贤纳士</li>
+            <li>商务合作</li>
+            <li>寻求报道</li>
+        </ul>
     </div>
 
-    <div class="page_bottom">
-        <div class="page_bottom_box">
-            <ul>
-                <li>关于我们</li>
-                <li>招贤纳士</li>
-                <li>商务合作</li>
-                <li>寻求报道</li>
-            </ul>
-        </div>
-
-        <div class="page_bottom_box">
-            <ul>
-                <li>公安部备案号11010502030143</li>
-                <li>京ICP备19004658</li>
-                <li>京网文[2020]1039-165号</li>
-                <li>经营性网站备案信息</li>
-                <li>北京互联网违法和不良信息举报中心</li>
-                <li>网络110报警服务</li>
-                <li>中国互联网举报中心</li>
-            </ul>
-        </div>
+    <div class="page_bottom_box">
+        <ul>
+            <li>公安部备案号11010502030143</li>
+            <li>京ICP备19004658</li>
+            <li>京网文[2020]1039-165号</li>
+            <li>经营性网站备案信息</li>
+            <li>北京互联网违法和不良信息举报中心</li>
+            <li>网络110报警服务</li>
+            <li>中国互联网举报中心</li>
+        </ul>
     </div>
+</div>
 </body>
+<script>
+    $("#div_digg .action").click(function () {
+        var is_up = $(this).hasClass("diggit");
 
+        $.ajax({
+            url:"/digg/",
+            type:"post",
+            data:{
+                "csrfmiddlewaretoken":'{{ csrf_token }}',
+                "article_id":"{{ article.pk }}",
+            },
+            success:function (data) {
+                if (data.status){
+
+                }else{
+                    alert("你已经点赞过！！！")
+                }
+            }
+        })
+
+    })
+</script>
 </html>

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
@@ -217,16 +217,16 @@
         <div class="page_top_info_menu">
             <div class="page_top_info_selectMenu">
                 <ul>
-                    <li>_用户名_</li>
-                    <li>个人中心</li>
-                    <li>退出登录</li>
+                    <li>{{ request.session.info.name }}</li>
+                    <li><a href="/{{ request.session.info.site_name }}" style="color: white">个人中心</a></li>
+                    <li><a href="/user/outlogin/" style="color: white">退出登录</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="page_top_info_imgBorder">
             <a href="#">
-                <img src="{% static 'image/head_pic.png' %}" alt="">
+                <img src="/media/{{ user.avatar }}" alt="">
             </a>
         </div>
 
@@ -237,8 +237,8 @@
         <ul>
             <li><a href="/blog/index">推荐</a></li>
             <li><a href="/index/ranking">热榜</a></li>
-            <li>分类</li>
-            <li>关注</li>
+            <li><a href="/index/tag">分类</a></li>
+            <li><a href="/index/friendship">关注</a></li>
             <li>点赞</li>
             <li>评论</li>
         </ul>

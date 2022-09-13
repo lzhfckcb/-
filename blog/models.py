@@ -91,10 +91,3 @@ class Article2Tag(models.Model):
     def __str__(self):
         v = self.article.title + "---" + self.tag.title
         return v
-
-# class Category(models.Model):
-#     """博客个人文章分类表"""
-#     title = models.CharField(verbose_name="分类标题", max_length=32)
-#     blog = models.ForeignKey(verbose_name='所属博客', to='Blog', to_field='id', on_delete=models.CASCADE)
-
-# Create your models here.
