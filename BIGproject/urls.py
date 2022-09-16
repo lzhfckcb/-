@@ -34,6 +34,7 @@ urlpatterns = [
     path('index/tag/', index.index_tag),
     path('index/friendship/', index.index_friendship),
     path("digg/", article.digg),
+    path("comment/", article.comment),
     re_path('index/tag/(?P<param>.*)/$', index.index_tag),
     re_path('^(?P<home_site>\w+)$', home.home_site),
     re_path('^(?P<home_site>\w+)/tag/(?P<param>.*)/$', home.home_site),

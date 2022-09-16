@@ -56,8 +56,8 @@ class Article(models.Model):
 
 class ArticleUpDown(models.Model):
     """点赞表"""
-    user = models.ForeignKey('UserInfo', null=True, on_delete=models.CASCADE)
-    article = models.ForeignKey("Article", null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(to='UserInfo', null=True, on_delete=models.CASCADE, to_field="id")
+    article = models.ForeignKey(to="Article", null=True, on_delete=models.CASCADE, to_field="id")
     is_up = models.BooleanField(default=True)
 
 
@@ -67,7 +67,7 @@ class Comment(models.Model):
     article = models.ForeignKey(verbose_name='评论文章', to='Article', to_field='id', on_delete=models.CASCADE)
     content = models.CharField(verbose_name="评论内容", max_length=255)
     create_time = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
-    parent_comment = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    parent_comment = models.ForeignKey(to='self', null=True, on_delete=models.SET_NULL, to_field="id")
 
 
 class Tag(models.Model):

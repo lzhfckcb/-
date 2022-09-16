@@ -8,10 +8,12 @@ def article_detail(request, article_id):
     article_object = models.Article.objects.filter(pk=article_id).first()
     user = article_object.user
     blog = user.blog
+    comment_list = models.Comment.objects.filter(article_id=article_id).all()
     content = {
         "blog": blog,
         "article": article_object,
         "user": user,
+        "comment_list": comment_list,
     }
     return render(request, "page.html", content)
 
@@ -19,15 +21,27 @@ def article_detail(request, article_id):
 def digg(request):
     article_id = request.POST.get("article_id")
     user_id = request.session.get("info").get("id")
-    user = models.UserInfo.objects.filter(pk=user_id).first()
-    article = models.Article.objects.filter(pk=article_id).first()
-    obj = models.ArticleUpDown.objects.filter(user=user, article=article).first()
+    obj = models.ArticleUpDown.objects.filter(user_id=user_id, article_id=article_id).first()
     response = {
         "status": True
     }
     if not obj:
-        models.ArticleUpDown.objects.create(user=user, article=article)
+        models.ArticleUpDown.objects.create(user_id=user_id, article_id=article_id)
         models.Article.objects.filter(pk=article_id).update(up_count=F("up_count")+1)
     else:
         response["status"] = False
     return JsonResponse(response)
+
+
+def comment(request):
+    user_id = request.session.get("info").get("id")
+    article_id = request.POST.get("article_id")
+    content = request.POST.get("content")
+    pid = request.POST.get("pid")
+    data = models.Comment.objects.create(
+        user_id=user_id,
+        article_id=article_id,
+        content=content,
+        parent_comment_id=pid,
+    )
+    return  HttpResponse("成功")

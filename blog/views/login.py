@@ -20,8 +20,9 @@ def login(request):
             form.add_error("password", "用户名或密码错误")
             return render(request, "user_login.html", {"form": form})
         blog = admin_object.blog
-        request.session["info"] = {'id': admin_object.id, 'name': admin_object.name, 'site_name': blog.site_name}
-        request.session.set_expiry(60*60*24*7)
+        request.session["info"] = {'id': admin_object.id, 'name': admin_object.name, 'site_name': blog.site_name,
+                                   'avatar': str(admin_object.avatar)}
+        request.session.set_expiry(60 * 60 * 24 * 7)
         return redirect("/blog/index/")
     return render(request, "user_login.html", {"form": form})
 

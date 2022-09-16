@@ -297,6 +297,7 @@
             margin-left: 10px;
         }
 
+        .pid_info,
         .comment_name,
         .comment_data {
             font-size: 12px;
@@ -491,54 +492,45 @@
                 <div class="inputSection">
                     <form action="">
                         <div class="myhead">
-                            <img src="/images/head_pic.png" alt="">
+                            <img src="/media/{{ request.session.info.avatar }}" alt="">
                         </div>
-                        <textarea name="" id="" cols="" rows=""></textarea>
-                        <input type="submit" value="发表评论">
+                        <textarea name="" id="comment_content" cols="" rows=""></textarea>
+                        <input type="submit" value="发表评论" id="comment_btn">
                     </form>
                 </div>
                 <!-- 动态创建 -->
-                <div class="comment_box">
-                    <div class="comment_meta">
-                        <div class="comment_avatar">
-                            <img src="/images/head_pic.png" alt="">
-                        </div>
-                        <div class="comment_body">
-                            <div class="comment_name">
-                                _用户名_
+                {% for comment in comment_list %}
+                    <div class="comment_box">
+                        <div class="comment_meta">
+                            <div class="comment_avatar">
+                                <img src="/media/{{ user.avatar }}" alt="">
                             </div>
-                            <div class="comment_word">
-                                知天易，逆天男
-                            </div>
-                            <div class="comment_data">
-                                <span>2022-09-06 17:24 </span>
-                                <span>点赞: 1</span>
-                                <span>评论: 1</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 动态创建 -->
-                <div class="comment_box">
-                    <div class="comment_meta">
-                        <div class="comment_avatar">
-                            <img src="/images/head_pic.png" alt="">
-                        </div>
-                        <div class="comment_body">
-                            <div class="comment_name">
-                                _用户名_
-                            </div>
-                            <div class="comment_word">
-                                知天易，逆天男
-                            </div>
-                            <div class="comment_data">
-                                <span>2022-09-06 17:24 </span>
-                                <span>点赞: 1</span>
-                                <span>评论: 1</span>
+                            <div class="comment_body">
+
+                                <div class="comment_name">
+                                    <a href="#"># {{ forloop.counter }}楼</a>&nbsp;&nbsp;&nbsp;{{ comment.user }}
+                                </div>
+                                {% if comment.parent_comment_id %}
+                                    <div class="pid_info well">
+                                        <p>
+                                            {{ comment.parent_comment.user.name }}: {{ comment.parent_comment.content }}
+                                        </p>
+                                    </div>
+                                {% endif %}
+                                <div class="comment_word">
+                                    {{ comment.content }}
+                                </div>
+                                <div class="comment_data">
+                                    <span>{{ comment.create_time }}</span>
+                                    <span>点赞: 1</span>
+                                    <span>评论: 1</span>
+                                    <a href="#" class="reply" username="{{ comment.user }}"
+                                       userid="{{ comment.pk }}">回复</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="right_box">
@@ -587,21 +579,53 @@
         var is_up = $(this).hasClass("diggit");
 
         $.ajax({
-            url:"/digg/",
-            type:"post",
-            data:{
-                "csrfmiddlewaretoken":'{{ csrf_token }}',
-                "article_id":"{{ article.pk }}",
+            url: "/digg/",
+            type: "post",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "article_id": "{{ article.pk }}",
             },
-            success:function (data) {
-                if (data.status){
+            success: function (data) {
+                if (data.status) {
 
-                }else{
+                } else {
                     alert("你已经点赞过！！！")
                 }
             }
         })
 
+    })
+</script>
+<script>
+    var pid = ""
+    $('#comment_btn').click(function () {
+        var content = $("#comment_content").val();
+        $.ajax({
+                url: "/comment/",
+                type: "post",
+                data: {
+                    "csrfmiddlewaretoken": '{{ csrf_token }}',
+                    "article_id": "{{ article.pk }}",
+                    "content": content,
+                    "pid": pid,
+                },
+                success: function (data) {
+                    location.reload();
+                    pid = ""
+                    $("comment_content").val("");
+                }
+            },
+        )
+    })
+
+    $('.reply').click(function () {
+
+        $("html,body").stop(true);
+        $("html,body").animate({scrollTop: $("#comment_content").offset().top}, 1000);
+        $('#comment_content').focus();
+        var val = "@" + $(this).attr("username") + '\n';
+        $('#comment_content').val(val);
+        pid = $(this).attr("userid");
     })
 </script>
 </html>

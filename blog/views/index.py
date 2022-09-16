@@ -17,7 +17,6 @@ def index(request):
         "page_string": page_string,
         "user": user,
     }
-    print(user)
     return render(request, "index_content.html", content)
 
 
