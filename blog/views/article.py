@@ -44,4 +44,5 @@ def comment(request):
         content=content,
         parent_comment_id=pid,
     )
+    models.Article.objects.filter(pk=article_id).update(comment_count=F("comment_count")+1)
     return  HttpResponse("成功")
