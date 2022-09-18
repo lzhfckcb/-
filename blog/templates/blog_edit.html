@@ -362,62 +362,28 @@
 </div>
 <div class="page_center">
     <div class="main">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">操作</h3>
-                    </div>
-                    <div class="panel-body">
-                        <a href="/blog/add">添加文章</a>
-                        &nbsp;
-                        <a href="/tag/add">添加标签</a>
-                    </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章标题</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" name="title" value="{{ article.title }}">
                 </div>
             </div>
-            <div class="col-md-8">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>文章标题</th>
-                        <th>评论数</th>
-                        <th>点赞数</th>
-                        <th>操作</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for article in article_list %}
-                        <tr>
-                            <td>{{ article.title }}</td>
-                            <td>{{ article.comment_count }}</td>
-                            <td>{{ article.up_count }}</td>
-                            <td><a href="/blog/edit/{{ article.id }}">编辑</a></td>
-                            <td><a href="/blog/delete/{{ article.id }}">删除</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>标签名称</th>
-                        <th>操作</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for tag in tag_list %}
-                        <tr>
-                            <td>{{ tag.title }}</td>
-                            <td><a href="/tag/edit/{{ tag.id }}">编辑</a></td>
-                            <td><a href="/tag/delete/{{ tag.id }}">删除</a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章内容</h3>
+                </div>
+                <div class="panel-body">
+                <textarea id="editor_id" name="content" style="width:700px;height:300px;">
+                    {{ article.content }}
+                </textarea>
+                </div>
             </div>
-        </div>
+            <button type="submit" class="btn btn-info">提交</button>
+        </form>
     </div>
 </div>
 <div class="page_bottom">
@@ -464,6 +430,15 @@
 <script charset="utf-8" src={% static 'kindeditor/kindeditor-all-min.js' %}></script>
 <script>
     KindEditor.ready(function (K) {
-        window.editor = K.create('#editor_id');
+        window.editor = K.create('#editor_id', {
+            width: "1000",
+            height: "400",
+            resizeType: 0,
+            uploadJson: "/article/upload/",
+            extraFileUploadParams: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+            },
+            filePostName: "upload_img"
+        });
     });
 </script>

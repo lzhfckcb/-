@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改个人信息</title>
+    <link rel="stylesheet" href="css/page_top.css">
+    <script src="js/page_top_info_selectMenu.js"></script>
+    <link rel="stylesheet" href="css/page_bottom.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #808080;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .page_center {
+            background-color: rgb(246, 248, 250);
+            min-width: 1000px;
+            min-height: 650px;
+            height: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .page_center_shell {
+            width: 90%;
+            min-width: 900px;
+            max-width: 1200px;
+            margin-bottom: 20px;
+        }
+
+        /* 上边栏部分 */
+        .page_center_top {
+            height: 48px;
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            margin: 24px 0px;
+            position: relative;
+        }
+
+        .page_center_top a {
+            color: #909090;
+            line-height: 48px;
+            position: absolute;
+            left: 24px;
+        }
+
+        .page_center_top a:hover {
+            color: #007fff;
+        }
+
+        @media only screen and (max-width: 1268px) {
+            .body_leftBox {
+                color: #000;
+                display: none;
+            }
+        }
+
+        /* 主体部分 */
+        .page_center_body {
+            width: 100%;
+            min-width: 900px;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* 左边栏部分 */
+        .body_leftBox {
+            width: 232px;
+            border-radius: 3px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .body_leftBox #first {
+            margin-top: 10px;
+            background: #e8f3ff;
+        }
+
+        .body_leftBox li {
+            width: 210px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color: #1d7dfa;
+            margin: 0px 10px;
+        }
+
+        /* 个人资料部分 */
+        .body_mainBox {
+            width: 900px;
+            height: 625px;
+            border-radius: 3px;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .title {
+            margin: 20px;
+        }
+
+        .body_mainBox form {
+            display: flex;
+            justify-content: space-between;
+            margin-left: 20px;
+        }
+
+        .body_mainBox form table {
+            display: flex;
+            justify-content: space-between;
+            border-collapse: collapse;
+
+        }
+
+        .body_mainBox form tr {
+            height: 60px;
+        }
+
+        .body_mainBox form tr td {
+            text-align: left;
+            vertical-align: middle;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .body_mainBox form tr:last-of-type td {
+            border-bottom: none;
+        }
+
+        .body_mainBox form tr td:first-of-type {
+            width: 100px;
+        }
+
+        .body_mainBox .input_shell {
+            width: 440px;
+            height: 33px;
+            border: 1px solid rgb(221, 221, 221);
+            box-sizing: border-box;
+            padding: 5px 0px 0px 5px;
+            background-color: #fafafa;
+        }
+
+        .body_mainBox .input_shell input {
+            background-color: #fafafa;
+            width: 80%;
+            height: 90%;
+            font-size: 16px;
+            border: none;
+            outline: none;
+        }
+
+        .body_mainBox .textarea_shell {
+            height: 140px;
+            width: 440px;
+            padding: 13px 0px;
+        }
+
+        .body_mainBox textarea {
+            height: 100%;
+            width: 100%;
+            font-size: 16px;
+            background-color: #fafafa;
+            outline: none;
+            resize: none;
+            border: 1px solid rgb(221, 221, 221);
+            box-sizing: border-box;
+            padding: 5px;
+        }
+
+        .body_mainBox input[type=submit] {
+            width: 95px;
+            height: 35px;
+
+            color: white;
+            font-size: 16px;
+            background-color: #1d7dfa;
+            cursor: pointer;
+
+            border: none;
+            border-radius: 3px;
+            margin-top: 35px;
+
+        }
+
+        .info_avatar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 250px;
+            width: 90px;
+            margin-right: 50px;
+        }
+
+        .info_avatar .info_avatar_hint {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            height: 150px;
+            width: 90px;
+        }
+
+        .info_avatar input[type=file] {
+            width: 70px;
+        }
+
+        .info_avatar p {
+            color: #808080;
+            font-size: 12px;
+        }
+
+        .info_avatar_img {
+            width: 90px;
+            height: 90px;
+            /* overflow: hidden; */
+            border-radius: 50%;
+        }
+
+        .info_avatar_img img {
+            width: 90px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page_top">
+        <div class="page_top_link">
+
+            <div class="page_top_link_front">
+                <a href="#">首页</a>
+            </div>
+
+            <div class="page_top_link_search">
+                <form action="#">
+                    <input type="text" placeholder="搜索文章">
+                    <input type="submit" value="搜索">
+                </form>
+            </div>
+
+        </div>
+        <div class="page_top_info">
+            <div class="page_top_info_menu">
+                <div class="page_top_info_selectMenu">
+                    <ul>
+                        <li>_用户名_</li>
+                        <li>个人中心</li>
+                        <li>退出登录</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page_top_info_imgBorder">
+                <a href="#">
+                    <img src="/images/head_pic.png" alt="">
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="page_center">
+        <div class="page_center_shell">
+            <div class="page_center_top">
+                <a href="">&lt; 返回个人主页</a>
+            </div>
+            <div class="page_center_body">
+                <div class="body_leftBox">
+                    <ul>
+                        <li id="first">个人资料</li>
+                    </ul>
+                </div>
+                <div class="body_mainBox">
+                    <h3 class="title">个人资料</h3>
+                    <form action="">
+                        <div class="info_table">
+                            <table>
+                                <tr>
+                                    <td>_用户名_</td>
+                                    <td>
+                                        <div class="input_shell">
+                                            <input type="text" placeholder="填写你的用户名">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>手机号</td>
+                                    <td>
+                                        <div class="input_shell"><input type="text" placeholder="13782461917"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>个人网址</td>
+                                    <td>
+                                        <div class="input_shell"><input type="text" placeholder="www.4399.com"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>个人介绍</td>
+                                    <td>
+                                        <div class="textarea_shell">
+                                            <textarea name="" id="">这个人很懒,没有留下任何东西</textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="submit" value="保存修改"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="info_avatar">
+                            <div class="info_avatar_img">
+                                <img src="/images/head_pic.png" alt="">
+                            </div>
+                            <div class="info_avatar_hint">
+                                <span>我的头像</span>
+                                <input type="file">
+                                <span></span>
+                                <p>支持 jpg、png、jpeg 格式大小 5M 以内的图片</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="page_bottom">
+        <div class="page_bottom_box">
+            <ul>
+                <li>关于我们</li>
+                <li>招贤纳士</li>
+                <li>商务合作</li>
+                <li>寻求报道</li>
+            </ul>
+        </div>
+
+        <div class="page_bottom_box">
+            <ul>
+                <li>公安部备案号11010502030143</li>
+                <li>京ICP备19004658</li>
+                <li>京网文[2020]1039-165号</li>
+                <li>经营性网站备案信息</li>
+                <li>北京互联网违法和不良信息举报中心</li>
+                <li>网络110报警服务</li>
+                <li>中国互联网举报中心</li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    var input_shell = document.querySelectorAll(".input_shell");
+    for (let i = 0; i < input_shell.length; i++) {
+        input_shell[i].addEventListener("mouseover", function () {
+            // alert('ok');
+            let input = this.querySelector("input");
+            input.addEventListener("focus", function () {
+                this.style.backgroundColor = 'white';
+                input_shell[i].style.backgroundColor = 'white';
+                input_shell[i].style.borderColor = '#3370ff';
+            });
+            this.style.backgroundColor = '#e5e6eb';
+            input.style.backgroundColor = '#e5e6eb';
+        });
+
+        input_shell[i].addEventListener("mouseout", function () {
+            // alert('ok');
+            let input = this.querySelector("input");
+            input.addEventListener("blur", function () {
+                this.style.backgroundColor = '#fafafa';
+                input_shell[i].style.backgroundColor = '#fafafa';
+                input_shell[i].style.borderColor = 'rgb(221, 221, 221)';
+            });
+            this.style.backgroundColor = '#fafafa';
+            input.style.backgroundColor = '#fafafa';
+        });
+    }
+</script>
+
+</html>

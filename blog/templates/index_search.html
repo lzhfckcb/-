@@ -1,23 +1,17 @@
-{% extends "home_base.html" %}
+{% extends "index.html" %}
+{% load static %}
 {% block content %}
-    <nav>
-        <span>博客</span>
-        {% if request.session.info.name == user.name %}
-            <a href="/blog/admin/" class="btn btn-primary btn-group-lg active" role="button">管理博客</a>
-        {% endif %}
-    </nav>
-    <!-- 以下内容后期将由js动态生成 -->
     {% for article in article_list %}
-        <div class="my_pages_area">
-            <div class="my_pages_title"><a
+        <div class="index_pages_area">
+            <div class="index_pages_title"><a
                     href="/article/{{ article.id }}">{{ article.title }}</a></div>
-            <div class="my_pages_img">
-                <img src="/images/title_pic.png" alt="">
+            <div class="index_pages_img">
+                <img src="{% static 'image/title_pic.png' %}" alt="">
             </div>
-            <div class="my_pages_Summary">
+            <div class="index_pages_Summary">
                 <p>{{ article.desc }}</p>
             </div>
-            <div class="my_pages_data">
+            <div class="index_pages_data">
                 <ul>
                     <li>发布时间:{{ article.create_time }}</li>
                     <li>-</li>
@@ -30,6 +24,7 @@
             </div>
         </div>
     {% endfor %}
+    <p><h1 style="color: red">{{ flag }}</h1></p>
     <div class="pagination">
         <ul class="pagination">
             {{ page_string }}

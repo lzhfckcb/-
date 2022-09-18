@@ -362,9 +362,28 @@
 </div>
 <div class="page_center">
     <div class="main">
-        <textarea id="editor_id" name="content" style="width:700px;height:300px;">
-            &lt;strong&gt;HTML内容&lt;/strong&gt;
-        </textarea>
+        <form action="/article/upload/" method="post">
+            {% csrf_token %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章标题</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" name="title">
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">文章内容</h3>
+                </div>
+                <div class="panel-body">
+                <textarea id="editor_id" name="content" style="width:700px;height:300px;">
+                    请输入你要写的内容
+                </textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info">提交</button>
+        </form>
     </div>
 </div>
 <div class="page_bottom">
@@ -411,9 +430,15 @@
 <script charset="utf-8" src={% static 'kindeditor/kindeditor-all-min.js' %}></script>
 <script>
     KindEditor.ready(function (K) {
-        window.editor = K.create('#editor_id',{
-            width:"800",
-            height:"600"
+        window.editor = K.create('#editor_id', {
+            width: "1000",
+            height: "400",
+            resizeType: 0,
+            uploadJson: "/article/upload/",
+            extraFileUploadParams: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+            },
+            filePostName: "upload_img"
         });
     });
 </script>

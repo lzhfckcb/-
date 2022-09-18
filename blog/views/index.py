@@ -27,7 +27,7 @@ def index_search(request):
         Q(title__contains=content) | Q(content__contains=content) | Q(desc__contains=content))
     if not article_list:
         flag = "什么都没有找到哦"
-    return render(request, "index_content.html", {"article_list": article_list, "flag": flag})
+    return render(request, "index_search.html", {"article_list": article_list, "flag": flag})
 
 
 def index_ranking(request):
