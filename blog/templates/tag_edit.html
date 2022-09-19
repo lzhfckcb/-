@@ -1,0 +1,419 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #808080;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        /* 头部栏的CSS样式 */
+        .page_top {
+            height: 57px;
+            background-color: rgb(36, 41, 47);
+            color: white;
+            min-width: 1000px;
+        }
+
+        .page_top_link {
+            float: left;
+        }
+
+        .page_top_link_front {
+            float: left;
+            line-height: 57px;
+            padding: 0px 20px;
+            box-sizing: border-box;
+            border-right: 1px solid #808080;
+        }
+
+        .page_top_link_search {
+            color: rgb(144, 144, 144);
+            width: 250px;
+            height: 27px;
+            float: left;
+            border: 1px solid rgb(87, 96, 106);
+            padding: 0px 5px;
+            box-sizing: border-box;
+            margin: 16px 20px 0px;
+        }
+
+        .page_top_link_search button {
+            font-size: 15px;
+            color: inherit;
+            background-color: rgb(36, 41, 47);
+            border: none;
+            float: right;
+            line-height: 24px;
+            cursor: pointer;
+        }
+
+        .page_top_link_search input:hover {
+            color: rgb(144, 144, 144);
+        }
+
+        .page_top_link_search input {
+            outline: none;
+            border: none;
+            background-color: rgb(36, 41, 47);
+            width: 80%;
+        }
+
+        .page_top_info {
+            float: right;
+            padding: 16px 20px 0px;
+            cursor: pointer;
+        }
+
+        .page_top_info_imgBorder {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            overflow: hidden;
+            float: right;
+        }
+
+        .page_top_info img {
+            width: 25px;
+        }
+
+        .page_top_info_menu {
+            float: right;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-top-color: white;
+            position: relative;
+            top: 10px;
+            left: 5px;
+        }
+
+        .page_top_info_selectMenu {
+            width: 80px;
+            border-radius: 5px;
+            display: none;
+            padding: 5px 0px;
+            background-color: #808080;
+            position: absolute;
+            top: 52px;
+            right: 20px;
+        }
+
+        .page_top_info_selectMenu li {
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+        }
+
+        .page_top_info_selectMenu li:hover {
+            background-color: aqua;
+        }
+
+        .page_top_info_selectMenu::after {
+            content: " ";
+            display: block;
+            width: 0px;
+            height: 0px;
+            border: 10px solid transparent;
+            border-bottom-color: #808080;
+            position: absolute;
+            top: -20px;
+            right: 13px;
+        }
+
+        /* 主体部分CSS样式 */
+        .page_center {
+            background-color: rgb(246, 248, 250);
+            min-width: 1200px;
+            /* min-height: 650px; */
+            /* height: auto; */
+            display: flex;
+            justify-content: center;
+        }
+
+        .main {
+            min-width: 1000px;
+            min-height: 650px;
+
+        }
+
+        /* 信息框部分 */
+        .my_info {
+            float: left;
+            width: 230px;
+            margin-left: 20px;
+        }
+
+        .avatar {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 40px 0px 0px 0px;
+        }
+
+        .avatar img {
+            width: 250px;
+        }
+
+        #myName {
+            font: 300 20px " ";
+            padding: 20px 0px;
+        }
+
+        .border {
+            width: 260px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: rgb(246, 248, 250);
+            border: 1px solid #808080;
+            border-radius: 3px;
+        }
+
+        #myWords {
+            width: 100%;
+            border: 1px solid transparent;
+            padding: 10px 0px;
+            overflow-wrap: break-word;
+
+        }
+
+        #myData {
+            width: 100%;
+
+        }
+
+        #myData span {
+            float: left;
+            padding: 0px 7px 0px 0px;
+            font: 300 14px " ";
+        }
+
+        /* 博客框部分 */
+        .my_pages {
+            float: right;
+            width: 700px;
+            margin-top: 30px;
+            /* background-color: bisque; */
+        }
+
+        .my_pages nav {
+            border-bottom: 1px solid rgb(36, 41, 47);
+            height: 45px;
+        }
+
+        .my_pages span {
+            font: 400 16px " ";
+            line-height: 45px;
+            padding: 0px 20px;
+        }
+
+        .my_pages_area {
+            width: 700px;
+            height: 200px;
+            background-color: #ffffff;
+            /* border-top: 1px solid rgb(216, 222, 228); */
+            border-bottom: 1px solid rgb(216, 222, 228);
+            padding: 12px 20px 0px;
+            margin: 5px 0px;
+
+            box-sizing: border-box;
+        }
+
+        .my_pages_title {
+            font: 700 16px " ";
+            /* width: 100%; */
+            color: #1d2129;
+            line-height: 24px;
+            margin-bottom: 15px;
+        }
+
+        .my_pages_img img {
+            float: right;
+            width: 120px;
+            height: 80px;
+        }
+
+        .my_pages_Summary p {
+            font: 400 13px " ";
+            color: #86909c;
+            line-height: 22px;
+        }
+
+        .my_pages_data {
+            margin: 0px;
+        }
+
+        .my_pages_data li {
+            font: 400 12px " ";
+            color: #86909c;
+            line-height: 22px;
+
+            float: left;
+            padding: 5px;
+
+            position: relative;
+            top: 10px;
+        }
+
+
+        /* 底部部分 */
+        .page_bottom {
+            min-height: 82px;
+            box-sizing: border-box;
+            min-width: 1000px;
+            background-color: rgb(188, 188, 188);
+            padding: 10px 0px;
+        }
+
+        .page_bottom_box {
+            display: flex;
+            justify-content: center;
+            min-width: 1000px;
+        }
+
+        .page_bottom_box li {
+            padding: 0px 3px;
+            float: left;
+            text-align: center;
+            font: 400 12px " ";
+            color: #86909c;
+            line-height: 22px;
+        }
+
+        .article {
+            background: #fff;
+            border-radius: 7px 7px 7px 7px;
+            box-shadow: 1px 1px 2px #a7a8ad;
+            min-height: 200px;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-all;
+            padding-left: 30px;
+            padding-right: 20px;
+            margin: 10px 5px 20px 0;
+        }
+
+        .page_top_link_search input[type=submit] {
+            width: 30px;
+            font-size: 15px;
+            color: inherit;
+            background-color: rgb(36, 41, 47);
+            border: none;
+            float: right;
+            line-height: 24px;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href={% static '/plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}>
+</head>
+
+<body>
+<div class="page_top">
+    <div class="page_top_link">
+
+        <div class="page_top_link_front">
+            <a href="/blog/index/">首页</a>
+        </div>
+        <div class="page_top_link_front">
+            <span><a href="/{{ blog.site_name }}" style="color: white">{{ blog }}</a></span>
+        </div>
+        <div class="page_top_link_search">
+            <form action="/index/search/">
+                <input type="text" placeholder="搜索文章" name="search">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+
+    </div>
+    <div class="page_top_info">
+        <div class="page_top_info_menu"></div>
+        <div class="page_top_info_selectMenu">
+            <ul>
+                <li>{{ request.session.info.name }}</li>
+                <li><a href="/{{ request.session.info.site_name }}" style="color: white">个人中心</a></li>
+                <li><a href="/user/outlogin/" style="color: white">退出登录</a></li>
+            </ul>
+        </div>
+        <div class="page_top_info_imgBorder">
+            <a href="#">
+                <img src="/images/head_pic.png" alt="">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="page_center">
+    <div class="main">
+        <form method="post">
+            {% csrf_token %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">标签名称</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" name="title" value="{{ tag.title }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info">提交</button>
+        </form>
+    </div>
+</div>
+<div class="page_bottom">
+    <div class="page_bottom_box">
+        <ul>
+            <li>关于我们</li>
+            <li>招贤纳士</li>
+            <li>商务合作</li>
+            <li>寻求报道</li>
+        </ul>
+    </div>
+    <div class="page_bottom_box">
+        <ul>
+            <li>公安部备案号11010502030143</li>
+            <li>京ICP备19004658</li>
+            <li>京网文[2020]1039-165号</li>
+            <li>经营性网站备案信息</li>
+            <li>北京互联网违法和不良信息举报中心</li>
+            <li>网络110报警服务</li>
+            <li>中国互联网举报中心</li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>
+<!-- 下拉菜单 -->
+<script>
+    var info = document.querySelector('.page_top_info');
+    var menu = document.querySelector('.page_top_info_selectMenu');
+    info.addEventListener('mouseover', function () {
+        menu.style.display = 'block';
+    });
+    info.addEventListener('mouseout', function () {
+        menu.style.display = 'none';
+    });
+    menu.addEventListener('mouseover', function () {
+        this.style.display = 'block';
+    });
+    menu.addEventListener('mouseout', function () {
+        this.style.display = 'none';
+    });
+</script>
