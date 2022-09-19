@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.views.static import serve
 from django.conf import settings
-from blog.views import register, home, login, article, re_set, index, admins
+from blog.views import register, home, login, article, re_set, index, admins, person
 
 urlpatterns = [
     path('image/code/', login.image_code),
@@ -43,6 +43,8 @@ urlpatterns = [
     path("blog/edit/<int:nid>/", admins.blog_edit),
     path("tag/add/", admins.tag_add),
     path("tag/edit/<int:nid>/", admins.tag_edit),
+    path("friendship/add/", home.friendship_add),
+    path("person/edit/<int:nid>", person.person_edit),
     re_path('index/tag/(?P<param>.*)/$', index.index_tag),
     re_path('^(?P<home_site>\w+)$', home.home_site),
     re_path('^(?P<home_site>\w+)/tag/(?P<param>.*)/$', home.home_site),

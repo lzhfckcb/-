@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>修改个人信息</title>
-    <link rel="stylesheet" href="css/page_top.css">
-    <script src="js/page_top_info_selectMenu.js"></script>
-    <link rel="stylesheet" href="css/page_bottom.css">
+    <link rel="stylesheet" href={% static 'css/page_top.css' %}>
+    <script src={% static 'js/page_top_info_selectMenu.js' %}></script>
+    <link rel="stylesheet" href={% static 'css/page_bottom.css' %}>
     <style>
         * {
             margin: 0;
@@ -224,140 +225,154 @@
         .info_avatar_img {
             width: 90px;
             height: 90px;
-            /* overflow: hidden; */
+            overflow: hidden;
             border-radius: 50%;
         }
 
         .info_avatar_img img {
             width: 90px;
         }
+
+        .page_top_link_search input[type=submit] {
+            width: 30px;
+            font-size: 15px;
+            color: inherit;
+            background-color: rgb(36, 41, 47);
+            border: none;
+            float: right;
+            line-height: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
-    <div class="page_top">
-        <div class="page_top_link">
+<div class="page_top">
+    <div class="page_top_link">
 
-            <div class="page_top_link_front">
-                <a href="#">首页</a>
+        <div class="page_top_link_front">
+            <a href="/blog/index">首页</a>
+        </div>
+
+        <div class="page_top_link_search">
+            <form action="/index/search" method="get">
+                <input type="text" placeholder="搜索文章" name="search">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+
+    </div>
+    <div class="page_top_info">
+        <div class="page_top_info_menu">
+            <div class="page_top_info_selectMenu">
+                <ul>
+                    <li>{{ request.session.info.name }}</li>
+                    <li><a href="/{{ request.session.info.site_name }}" style="color: white">个人中心</a></li>
+                    <li><a href="/user/outlogin/" style="color: white">退出登录</a></li>
+                </ul>
             </div>
+        </div>
 
-            <div class="page_top_link_search">
-                <form action="#">
-                    <input type="text" placeholder="搜索文章">
-                    <input type="submit" value="搜索">
+        <div class="page_top_info_imgBorder">
+            <a href="#">
+                <img src="/media/{{ user.avatar }}" alt="">
+            </a>
+        </div>
+
+    </div>
+</div>
+<div class="page_center">
+    <div class="page_center_shell">
+        <div class="page_center_top">
+            <a href="">返回个人主页</a>
+        </div>
+        <div class="page_center_body">
+            <div class="body_leftBox">
+                <ul>
+                    <li id="first">个人资料</li>
+                </ul>
+            </div>
+            <div class="body_mainBox">
+                <h3 class="title">个人资料</h3>
+                <form method="post" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="info_table">
+                        <table>
+                            <tr>
+                                <td>_用户名_</td>
+                                <td>
+                                    <div class="input_shell">
+                                        <input type="text" placeholder="填写你的用户名" name="name" value="{{ user.name }}">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>手机号</td>
+                                <td>
+                                    <div class="input_shell"><input type="text" placeholder="13782461917"
+                                                                    name="telephone" value="{{ user.telephone }}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>个人网址</td>
+                                <td>
+                                    <div class="input_shell"><input type="text" placeholder="www.4399.com"
+                                                                    name="site_name" value="{{ blog.site_name }}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>个人介绍</td>
+                                <td>
+                                    <div class="textarea_shell">
+                                        <textarea name="introduction" id="">{{ user.introduction }}</textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" value="保存修改"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="info_avatar">
+                        <div class="info_avatar_img">
+                            <img src="/media/{{ user.avatar }}" alt="">
+                        </div>
+                        <div class="info_avatar_hint">
+                            <span>我的头像</span>
+                            <input type="file" name="avatar">
+                            <span></span>
+                            <p>支持 jpg、png、jpeg 格式大小 5M 以内的图片</p>
+                        </div>
+                    </div>
                 </form>
             </div>
-
-        </div>
-        <div class="page_top_info">
-            <div class="page_top_info_menu">
-                <div class="page_top_info_selectMenu">
-                    <ul>
-                        <li>_用户名_</li>
-                        <li>个人中心</li>
-                        <li>退出登录</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="page_top_info_imgBorder">
-                <a href="#">
-                    <img src="/images/head_pic.png" alt="">
-                </a>
-            </div>
-
         </div>
     </div>
-    <div class="page_center">
-        <div class="page_center_shell">
-            <div class="page_center_top">
-                <a href="">&lt; 返回个人主页</a>
-            </div>
-            <div class="page_center_body">
-                <div class="body_leftBox">
-                    <ul>
-                        <li id="first">个人资料</li>
-                    </ul>
-                </div>
-                <div class="body_mainBox">
-                    <h3 class="title">个人资料</h3>
-                    <form action="">
-                        <div class="info_table">
-                            <table>
-                                <tr>
-                                    <td>_用户名_</td>
-                                    <td>
-                                        <div class="input_shell">
-                                            <input type="text" placeholder="填写你的用户名">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>手机号</td>
-                                    <td>
-                                        <div class="input_shell"><input type="text" placeholder="13782461917"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>个人网址</td>
-                                    <td>
-                                        <div class="input_shell"><input type="text" placeholder="www.4399.com"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>个人介绍</td>
-                                    <td>
-                                        <div class="textarea_shell">
-                                            <textarea name="" id="">这个人很懒,没有留下任何东西</textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><input type="submit" value="保存修改"></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="info_avatar">
-                            <div class="info_avatar_img">
-                                <img src="/images/head_pic.png" alt="">
-                            </div>
-                            <div class="info_avatar_hint">
-                                <span>我的头像</span>
-                                <input type="file">
-                                <span></span>
-                                <p>支持 jpg、png、jpeg 格式大小 5M 以内的图片</p>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
+</div>
+<div class="page_bottom">
+    <div class="page_bottom_box">
+        <ul>
+            <li>关于我们</li>
+            <li>招贤纳士</li>
+            <li>商务合作</li>
+            <li>寻求报道</li>
+        </ul>
     </div>
-    <div class="page_bottom">
-        <div class="page_bottom_box">
-            <ul>
-                <li>关于我们</li>
-                <li>招贤纳士</li>
-                <li>商务合作</li>
-                <li>寻求报道</li>
-            </ul>
-        </div>
 
-        <div class="page_bottom_box">
-            <ul>
-                <li>公安部备案号11010502030143</li>
-                <li>京ICP备19004658</li>
-                <li>京网文[2020]1039-165号</li>
-                <li>经营性网站备案信息</li>
-                <li>北京互联网违法和不良信息举报中心</li>
-                <li>网络110报警服务</li>
-                <li>中国互联网举报中心</li>
-            </ul>
-        </div>
+    <div class="page_bottom_box">
+        <ul>
+            <li>公安部备案号11010502030143</li>
+            <li>京ICP备19004658</li>
+            <li>京网文[2020]1039-165号</li>
+            <li>经营性网站备案信息</li>
+            <li>北京互联网违法和不良信息举报中心</li>
+            <li>网络110报警服务</li>
+            <li>中国互联网举报中心</li>
+        </ul>
     </div>
+</div>
 </body>
 <script>
     var input_shell = document.querySelectorAll(".input_shell");

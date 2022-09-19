@@ -27,12 +27,16 @@ def index_search(request):
         Q(title__contains=content) | Q(content__contains=content) | Q(desc__contains=content))
     if not article_list:
         flag = "什么都没有找到哦"
-    return render(request, "index_search.html", {"article_list": article_list, "flag": flag})
+    name = request.session.get("info").get("name")
+    user = models.UserInfo.objects.filter(name=name).first()
+    return render(request, "index_search.html", {"article_list": article_list, "flag": flag, "user": user})
 
 
 def index_ranking(request):
     article_list = models.Article.objects.order_by('-up_count')[:10]
-    return render(request, "ranking_content.html", {"article_list": article_list})
+    name = request.session.get("info").get("name")
+    user = models.UserInfo.objects.filter(name=name).first()
+    return render(request, "ranking_content.html", {"article_list": article_list, "user": user})
 
 
 def index_tag(request, **kwargs):
@@ -45,8 +49,10 @@ def index_tag(request, **kwargs):
     page_object = Pagination(request, queryset, page_size=5)
     article_list = page_object.page_queryset
     page_string = page_object.html()
+    name = request.session.get("info").get("name")
+    user = models.UserInfo.objects.filter(name=name).first()
     return render(request, "index_tag.html",
-                  {"tag_list": tag_list, "article_list": article_list, "page_string": page_string})
+                  {"tag_list": tag_list, "article_list": article_list, "page_string": page_string, "user": user})
 
 
 def index_friendship(request):
@@ -57,4 +63,6 @@ def index_friendship(request):
     for item in follow:
         articles = models.Article.objects.filter(user=item.follow).first()
         article_list.append(articles)
-    return render(request, "index_friendship.html", {"article_list": article_list, "follow": follow})
+    name = request.session.get("info").get("name")
+    user = models.UserInfo.objects.filter(name=name).first()
+    return render(request, "index_friendship.html", {"article_list": article_list, "follow": follow, "user": user})

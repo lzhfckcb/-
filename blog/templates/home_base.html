@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ blog }}</title>
+    <link rel="stylesheet" href={% static '/plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}>
+    <script src={% static 'js/jquery-3.6.0.min.js' %}></script>
     <style>
         * {
             margin: 0;
@@ -311,6 +313,7 @@
             padding-right: 20px;
             margin: 10px 5px 20px 0;
         }
+
         .page_top_link_search input[type=submit] {
             width: 30px;
             font-size: 15px;
@@ -322,7 +325,7 @@
             cursor: pointer;
         }
     </style>
-    <link rel="stylesheet" href={% static '/plugins/bootstrap-3.4.1-dist/css/bootstrap.min.css' %}>
+
 </head>
 
 <body>
@@ -333,7 +336,7 @@
             <a href="/blog/index/">首页</a>
         </div>
         <div class="page_top_link_front">
-            <span><a href="/{{ blog.site_name }}" style="color: white">{{ blog }}</a></span>
+            <span><a href="/{{ blog.site_name }}" style="color: white">{{ blog.title }}</a></span>
         </div>
         <div class="page_top_link_search">
             <form action="/index/search/">
@@ -354,7 +357,7 @@
         </div>
         <div class="page_top_info_imgBorder">
             <a href="#">
-                <img src="/images/head_pic.png" alt="">
+                <img src="/media/{{ user.avatar }}" alt="">
             </a>
         </div>
     </div>
@@ -367,7 +370,14 @@
             {% if request.session.info.name == user.name %}
                 <div class="site">
                     <div class="border">
-                        <a href="#">编辑信息</a>
+                        <a href="/person/edit/{{ user.id }}">编辑信息</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="site">
+                    <div>
+                        <button class="btn btn-primary btn-group-lg active" style="width: 260px" id="concern_btn" >关注
+                        </button>
                     </div>
                 </div>
             {% endif %}
@@ -401,9 +411,6 @@
     </div>
 </div>
 </body>
-
-</html>
-<!-- 下拉菜单 -->
 <script>
     var info = document.querySelector('.page_top_info');
     var menu = document.querySelector('.page_top_info_selectMenu');
@@ -420,3 +427,26 @@
         this.style.display = 'none';
     });
 </script>
+<script>
+    $("#concern_btn").click(function () {
+
+        $.ajax({
+            url: "/friendship/add/",
+            type: "post",
+            data: {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "fan": "{{ request.session.info.id }}",
+                "follow": "{{ user.id }}",
+            },
+            success: function (data) {
+                if (data.status) {
+
+                } else {
+                    alert("你已经关注过！！！")
+                }
+            }
+        })
+    })
+</script>
+</html>
+<!-- 下拉菜单 -->
