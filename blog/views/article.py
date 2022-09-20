@@ -2,9 +2,11 @@ from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from blog import models
 from django.db.models import F
+from blog.views.blog_view import get_user_ip
 
 
 def article_detail(request, article_id):
+    get_user_ip(request, article_id)
     article_object = models.Article.objects.filter(pk=article_id).first()
     user = article_object.user
     blog = user.blog

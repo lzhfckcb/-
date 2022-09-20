@@ -28,7 +28,6 @@ class Blog(models.Model):
     """博客信息表（站点表）"""
     title = models.CharField(verbose_name="个人博客标题", max_length=64)
     site_name = models.CharField(verbose_name="站点名称", max_length=64)
-    theme = models.CharField(verbose_name="博客主题", max_length=32)
 
     def __str__(self):
         return self.title
@@ -91,3 +90,14 @@ class Article2Tag(models.Model):
     def __str__(self):
         v = self.article.title + "---" + self.tag.title
         return v
+
+
+class ArticleViews(models.Model):
+    article = models.ForeignKey(verbose_name="访问量", to="Article", to_field="id", default=None,
+                             on_delete=models.CASCADE)
+    views = models.IntegerField()
+
+
+class ViewIp(models.Model):
+    user_ip = models.CharField(max_length=15, null=False)
+    create_time = models.DateTimeField(auto_now_add=True)

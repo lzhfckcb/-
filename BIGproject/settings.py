@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'BIGproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BIGproject',  # 数据库名字
+        'NAME': 'project',  # 数据库名字
         'USER': 'root',
         'PASSWORD': 'abcd12345',
         'HOST': '127.0.0.1',  # 那台机器安装了MySQL

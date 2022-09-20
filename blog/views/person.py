@@ -19,9 +19,9 @@ def person_edit(request, nid):
     models.UserInfo.objects.filter(id=id).update(name=name, telephone=telephone, introduction=introduction)
     exist = models.Blog.objects.filter(userinfo=user).exists()
     if not exist:
-        models.Blog.objects.create(title=user.name, site_name=site_name, theme=user.name)
+        models.Blog.objects.create(title=user.name, site_name=site_name)
     else:
-        models.Blog.objects.filter(userinfo=user).update(title="{}的站点".format(user.name), site_name=site_name, theme=user.name)
+        models.Blog.objects.filter(userinfo=user).update(title="{}的站点".format(user.name), site_name=site_name)
     request.session["info"] = {
         "id": id,
         "name": name,
